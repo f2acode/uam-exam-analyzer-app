@@ -30,10 +30,10 @@ public class Principal extends AppCompatActivity {
     Uri photoURI;
 
     public void tirarFoto(View view){
-        dispatchTakePictureIntent();
+        dispararIntentTirarFoto();
     }
 
-    private void dispatchTakePictureIntent() {
+    private void dispararIntentTirarFoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         // ensures that there's a camera activity to handle the intent
