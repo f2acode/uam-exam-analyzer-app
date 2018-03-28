@@ -7,17 +7,32 @@
     tools:context="plomba.com.br.analisadorprovas.Principal">
 
     <Button
-        android:id="@+id/btn_new_photo"
+        android:id="@+id/btn_nova_foto"
         android:text="@string/adicionarFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="tirarFoto"/>
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="dispararIntentTirarFoto"/>
 
-    <ImageView
-        android:id="@+id/img_view"
+    <Button
+        android:id="@+id/btn_galeria"
+        android:text="Galeria"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/btn_nova_foto"/>
+
+    <Button
+        android:id="@+id/btn_estatisticas"
+        android:text="Estatísticas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_new_photo"
-        android:layout_marginTop="10dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/btn_galeria"/>
 
 </RelativeLayout>
