@@ -81,4 +81,13 @@ public class Principal extends AppCompatActivity {
         return image;
     }
 
+    public void abrirGaleria(View view){
+        Intent intent = new Intent(this, GaleriaActivity.class);
+        startActivity(intent);
+    }
+
+    public void abrirEstatisticas(View view){
+        Intent intent = new Intent(this, EstatisticasActivity.class);
+        startActivity(intent);
+    }
 }

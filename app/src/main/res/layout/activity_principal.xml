@@ -24,6 +24,7 @@
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:onClick="abrirGaleria"
         android:layout_below="@+id/btn_nova_foto"/>
 
     <Button
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
+        android:onClick="abrirEstatisticas"
         android:layout_below="@+id/btn_galeria"/>
 
 </RelativeLayout>
