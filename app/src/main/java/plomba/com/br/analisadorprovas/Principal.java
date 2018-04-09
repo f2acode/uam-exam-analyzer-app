@@ -65,11 +65,19 @@ public class Principal extends AppCompatActivity {
     private File criarArquivoImagem() throws IOException{
 
         String mCurrentPhotoPath;
+        Helper helper = new Helper();
 
         // create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        File storageDir;
+
+        if(helper.isEmulator())
+            storageDir = getFilesDir();
+        else
+            storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
         File image = File.createTempFile(
                 imageFileName, /* prefix */
                 ".jpg", /* suffix */
