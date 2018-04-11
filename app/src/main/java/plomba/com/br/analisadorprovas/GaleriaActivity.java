@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,67 +28,76 @@ public class GaleriaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galeria);
 
-        String path;
-        if(helper.isEmulator())
-             path = getFilesDir().toString();
-        else
-            path = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString();
+        try{
+            String path;
+            if(helper.isEmulator())
+                path = getFilesDir().toString();
+            else
+                path = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString();
 
-        File directory = new File(path);
+            File directory = new File(path);
 
-        ArrayList<ImageView> images = new ArrayList<ImageView>();
+            LinearLayout llVerticalGaleria = (LinearLayout) findViewById(R.id.ll_vertical_galeria);
 
-        LinearLayout llVerticalGaleria = (LinearLayout) findViewById(R.id.ll_vertical_galeria);
+            File[] files = directory.listFiles();
 
-        File[] files = directory.listFiles();
+            // getting screen sizes
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int height = size.y;
 
-        // getting screen sizes
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
+            for(int i = 0; i < files.length; i ++){
 
-        for(int i = 0; i < files.length; i ++){
+                // creating the newLayoutHorizontal for each new line
+                LinearLayout llHorizontalGaleria = new LinearLayout(this);
+                llHorizontalGaleria.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        height/7
+                ));
 
-            LinearLayout llHorizontalGaleria = new LinearLayout(this);
-            llHorizontalGaleria.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    height/7
-            ));
+                llHorizontalGaleria.setOrientation(LinearLayout.HORIZONTAL);
+                llHorizontalGaleria.setPadding(3, 3, 3, 3);
 
-            llHorizontalGaleria.setOrientation(LinearLayout.HORIZONTAL);
-            llHorizontalGaleria.setPadding(3, 3, 3, 3);
+                // creating imageView
+                ImageView newImgView = new ImageView(this);
+                newImgView.setLayoutParams(new LinearLayout.LayoutParams(
+                        width/5,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                ));
 
-            ImageView newImgView = new ImageView(this);
-            newImgView.setLayoutParams(new LinearLayout.LayoutParams(
-                    width/5,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-            ));
+                Bitmap bmp = BitmapFactory.decodeFile(files[i].getAbsolutePath());
 
-            Bitmap bmp = BitmapFactory.decodeFile(files[i].getAbsolutePath());
+                newImgView.setImageBitmap(bmp);
+                llHorizontalGaleria.addView(newImgView);
 
-            newImgView.setImageBitmap(bmp);
-            llHorizontalGaleria.addView(newImgView);
+                // creating txtView
+                TextView newTxtView = new TextView(this);
+                newTxtView.setText(files[i].getName());
+                LinearLayout.LayoutParams layoutParamsTxtView = new LinearLayout.LayoutParams(
+                        (width/5)*4,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                );
 
-            TextView newTxtView = new TextView(this);
-            newTxtView.setText(files[i].getName());
-            LinearLayout.LayoutParams layoutParamsTxtView = new LinearLayout.LayoutParams(
-                    (width/5)*4,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-            );
+                // converting pixels to DIP
+                Resources r = getResources();
+                float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics());
+                layoutParamsTxtView.setMargins(Math.round(pxLeftMargin), 0, 0, 0);
 
-            // converting pixels to DIP
-            Resources r = getResources();
-            float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics());
-            layoutParamsTxtView.setMargins(Math.round(pxLeftMargin), 0, 0, 0);
+                newTxtView.setLayoutParams(layoutParamsTxtView);
 
-            newTxtView.setLayoutParams(layoutParamsTxtView);
+                llHorizontalGaleria.addView(newTxtView);
 
-            llHorizontalGaleria.addView(newTxtView);
+                llVerticalGaleria.addView(llHorizontalGaleria);
+            }
+        }catch(Exception ex){
+            CharSequence text = ex.getMessage();
+            int duration = Toast.LENGTH_LONG;
 
-            llVerticalGaleria.addView(llHorizontalGaleria);
-            //images.add(image);
+            Toast toast = Toast.makeText(this, text, duration);
+            toast.show();
         }
+
     }
 }
