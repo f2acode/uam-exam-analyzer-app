@@ -1,16 +1,19 @@
 package plomba.com.br.analisadorprovas;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -20,36 +23,45 @@ import java.util.Map;
  * Created by augus on 4/14/2018.
  */
 
-public class HttpRequestHelper extends AppCompatActivity {
+public class HttpRequestHelper {
 
-    public String listarEstatisticas(){
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://habitapi.azurewebsites.net/api/habit";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+    public interface VolleyCallback{
+        //void onSuccess(String result);
+        void onSuccess(JSONObject result);
+        void onSuccess(JSONArray result);
     }
 
-    public void postHabit(){
+    public void listarEstatisticas(final VolleyCallback callback, Context context){
 
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url ="https://habitapi.azurewebsites.net/api/habit";
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>(){
+                    @Override
+                    public void onResponse(JSONArray jsonArray){
+                        callback.onSuccess(jsonArray);
+                    }
+                },
+                new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Log.i("ERROR", error.getStackTrace().toString());
+                    //TODO: handle failure
+                }
+            }
+        );
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
+    }
+
+    public void postFoto(final VolleyCallback callback, Context context){
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(context);
         String url ="https://habitapi.azurewebsites.net/api/habit";
 
         Map<String, String> params = new HashMap();
@@ -62,6 +74,7 @@ public class HttpRequestHelper extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 //TODO: handle success
+                callback.onSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -71,6 +84,6 @@ public class HttpRequestHelper extends AppCompatActivity {
             }
         });
 
-        Volley.newRequestQueue(this).add(jsonRequest);
+        Volley.newRequestQueue(context).add(jsonRequest);
     }
 }
