@@ -6,41 +6,66 @@
     android:padding="5dp"
     tools:context="plomba.com.br.analisadorprovas.Principal">
 
-    <Button
-        android:id="@+id/btn_nova_foto"
-        android:text="@string/adicionarFoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="18dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
-        android:drawableRight="@android:drawable/ic_menu_camera"
-        android:drawablePadding="5dp"
-        android:onClick="dispararIntentTirarFoto"/>
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:weightSum="2">
 
-    <Button
-        android:id="@+id/btn_galeria"
-        android:text="Galeria"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:drawableRight="@android:drawable/ic_menu_gallery"
-        android:drawablePadding="5dp"
-        android:onClick="abrirGaleria"
-        android:layout_below="@+id/btn_nova_foto"/>
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="6dp"
+            android:weightSum="2">
 
-    <Button
-        android:id="@+id/btn_estatisticas"
-        android:text="Estatísticas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:onClick="abrirEstatisticas"
-        android:drawableRight="@android:drawable/ic_dialog_info"
-        android:drawablePadding="10dp"
-        android:layout_below="@+id/btn_galeria"/>
+            <Button
+                android:id="@+id/btn_nova_foto"
+                style="@style/ItemMainMenu"
+                android:drawableTop="@mipmap/baseline_add_a_photo_white_36dp"
+                android:onClick="dispararIntentTirarFoto"
+                android:text="@string/novaProva" />
+
+            <Button
+                android:id="@+id/btn_galeria"
+                style="@style/ItemMainMenu"
+                android:drawableTop="@mipmap/baseline_photo_library_white_36dp"
+                android:onClick="abrirGaleria"
+                android:text="@string/galeria" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout1"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="6dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_estatisticas"
+                style="@style/ItemMainMenu"
+                android:drawableTop="@mipmap/baseline_info_white_36dp"
+                android:onClick="abrirEstatisticas"
+                android:text="@string/estatisticas" />
+
+            <Button
+                android:id="@+id/btn_fale_conosco"
+                style="@style/ItemMainMenu"
+                android:drawableTop="@mipmap/baseline_contact_support_white_36dp"
+                android:onClick="abrirContato"
+                android:text="@string/contato" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

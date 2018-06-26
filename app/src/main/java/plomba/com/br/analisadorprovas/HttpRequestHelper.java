@@ -62,10 +62,10 @@ public class HttpRequestHelper {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url ="https://habitapi.azurewebsites.net/api/habit";
+        String url ="http://localhost:49732/api/images";
 
         Map<String, String> params = new HashMap();
-        params.put("habit", "habit");
+        params.put("description", "habit");
         params.put("date", "date");
 
         JSONObject parameters = new JSONObject(params);

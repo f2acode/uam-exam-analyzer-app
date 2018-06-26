@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContatoActivity"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/contato_texto"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:autoLink="email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contato_texto"/>
+
+    <TextView
+        android:id="@+id/contato_email"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:autoLink="email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contato_texto"
+        android:text="@string/contato_email"/>
+
+    <TextView
+        android:id="@+id/contato_linkedin"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:autoLink="web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contato_email"
+        android:text="@string/contato_linkedin"/>
+
+</RelativeLayout>

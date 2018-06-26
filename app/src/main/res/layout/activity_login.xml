@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="167dp"
+        android:layout_height="148dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/logo"
+        android:src="@mipmap/logo4" />
+
+    <EditText
+        android:id="@+id/email"
+        style="@style/EtLogin"
+        android:layout_below="@id/logo"
+        android:drawableLeft="@drawable/baseline_email_black_18dp"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/senha"
+        style="@style/EtLogin"
+        android:layout_below="@id/email"
+        android:drawableLeft="@drawable/baseline_lock_black_18dp"
+        android:hint="@string/senha"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_below="@id/senha"
+        android:text="@string/entrar"
+        style="@style/SimpleLargeBtn"
+        android:onClick="logar"/>
+
+    <Button
+        android:id="@+id/btn_registrar"
+        android:layout_below="@+id/btn_login"
+        android:text="@string/registrar"
+        style="@style/SimpleSecondaryLargeBtn"
+        android:onClick="registrar"/>
+
+    <Button
+        android:id="@+id/btn_pl"
+        android:layout_below="@+id/btn_registrar"
+        android:text="Pular login"
+        style="@style/SimpleSecondaryLargeBtn"
+        android:onClick="pularLogin"/>
+
+</RelativeLayout>

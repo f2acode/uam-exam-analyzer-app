@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">AnalisadorProvas</string>
-    <string name="adicionarFoto">Adicionar foto</string>
+    <string name="novaProva">+ Prova</string>
+    <string name="galeria">Galeria</string>
+    <string name="estatisticas">Estatísticas</string>
+    <string name="contato">Contato</string>
+    <string name="logo">Logo</string>
+    <string name="usuario">Usuário</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="registrar">Registrar</string>
+
+    <string name="contato_email">Email: <a href="mailto:augustto.felipe@hotmail.com?Subject=Lost%20Password" target="_top">augustto.felipe@hotmail.com</a></string>
+    <string name="contato_linkedin">Linkedin: <a href="https://www.linkedin.com/in/felipe-augustox/">https://www.linkedin.com/in/felipe-augustox/</a></string>
+    <string name="contato_texto">
+        Olá! Muito obrigado por baixar meu app!
+        Abaixo você pode conferir minhas informações para contato, caso haja alguma dúvida, crítica ou sugestão!
+
+        []s, Felipe Augusto.
+    </string>
 </resources>
