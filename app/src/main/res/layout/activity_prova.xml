@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    tools:context=".ProvaActivity">
+
+    <LinearLayout
+        android:id="@+id/headProva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <TextView
+            style="@style/TxtIconsProva"
+            android:drawableTop="@mipmap/pizzagraph"
+            android:text="Acertos" />
+
+        <TextView
+            style="@style/TxtIconsProva"
+            android:drawableTop="@mipmap/percentage"
+            android:text="Aproveitamento"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/provasProva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/headProva">
+        <TextView
+            android:id="@+id/errorProva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Infelizmente, não conseguimos realizar a correção dessa prova!"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package plomba.com.br.analisadorprovas;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -58,15 +59,17 @@ public class HttpRequestHelper {
         queue.add(jsonObjectRequest);
     }
 
-    public void postFoto(final VolleyCallback callback, Context context){
+    public void postFoto(final VolleyCallback callback, Context context, String imgBase64){
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url ="http://localhost:49732/api/images";
+        String url ="https://imagesexamprocess.azurewebsites.net/api/images";
 
         Map<String, String> params = new HashMap();
-        params.put("description", "habit");
-        params.put("date", "date");
+        params.put("description", "Default");
+        params.put("imagebase64", imgBase64);
+        params.put("date", "2018-03-19");
+        params.put("user", "Felipe");
 
         JSONObject parameters = new JSONObject(params);
 
@@ -74,15 +77,22 @@ public class HttpRequestHelper {
             @Override
             public void onResponse(JSONObject response) {
                 //TODO: handle success
+                Log.i("Banana", "Banana");
                 callback.onSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.i("Error Banana", "Banana");
                 error.printStackTrace();
                 //TODO: handle failure
             }
         });
+
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         Volley.newRequestQueue(context).add(jsonRequest);
     }

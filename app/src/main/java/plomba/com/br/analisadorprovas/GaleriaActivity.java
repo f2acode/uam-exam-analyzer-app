@@ -1,13 +1,17 @@
 package plomba.com.br.analisadorprovas;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class GaleriaActivity extends AppCompatActivity {
@@ -57,7 +62,7 @@ public class GaleriaActivity extends AppCompatActivity {
 
                 linhaGaleria.addView(getFileToImageView(imageFiles[i]));
                 linhaGaleria.addView(getTextToTextView(imageFiles[i]));
-                linhaGaleria.addView(getSendButton());
+                //linhaGaleria.addView(getSendButton(imageFiles[i]));
 
                 linearLayoutGaleria.addView(linhaGaleria);
             }
@@ -98,7 +103,17 @@ public class GaleriaActivity extends AppCompatActivity {
         textView.setLayoutParams(layoutParamsTxtView);
 
         linhaGaleria.addView(textView);
-        linhaGaleria.addView(getSendButton());
+
+        //Get image (OMG)
+        Resources res = getResources();
+        Drawable drawable = res.getDrawable(R.mipmap.simulado_enem);
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitMapData = stream.toByteArray();
+        String base64 = Base64.encodeToString(bitMapData, Base64.DEFAULT);
+
+        linhaGaleria.addView(getSendButton(base64));
 
         linearLayoutGaleria.addView(linhaGaleria);
     }
@@ -150,7 +165,7 @@ public class GaleriaActivity extends AppCompatActivity {
         return textView;
     }
 
-    public Button getSendButton(){
+    public Button getSendButton(final String imgBase64){
         Button btnSend = new Button(this);
         btnSend.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         btnSend.setTextColor(getResources().getColor(R.color.white));
@@ -166,13 +181,16 @@ public class GaleriaActivity extends AppCompatActivity {
                 httpRequestHelper.postFoto(new HttpRequestHelper.VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
-                        Toast.makeText(GaleriaActivity.this, "Object: " + response.toString(), Toast.LENGTH_LONG).show();
+                        Intent provaIntent = new Intent(getBaseContext(), ProvaActivity.class);
+                        provaIntent.putExtra("json", response.toString());
+                        startActivity(provaIntent);
+                        //Toast.makeText(GaleriaActivity.this, "Object: " + response.toString(), Toast.LENGTH_LONG).show();
                     }
 
                     public void onSuccess(JSONArray response){
                         Toast.makeText(GaleriaActivity.this, "Array: " + response.toString(), Toast.LENGTH_LONG).show();
                     }
-                }, getBaseContext());
+                }, getBaseContext(), imgBase64);
             }
         });
 
