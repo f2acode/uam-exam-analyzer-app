@@ -77,13 +77,11 @@ public class HttpRequestHelper {
             @Override
             public void onResponse(JSONObject response) {
                 //TODO: handle success
-                Log.i("Banana", "Banana");
                 callback.onSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Error Banana", "Banana");
                 error.printStackTrace();
                 //TODO: handle failure
             }

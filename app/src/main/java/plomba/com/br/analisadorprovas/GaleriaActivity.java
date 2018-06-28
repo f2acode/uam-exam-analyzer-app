@@ -25,8 +25,10 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.ByteBuffer;
 
 public class GaleriaActivity extends AppCompatActivity {
 
@@ -108,11 +110,12 @@ public class GaleriaActivity extends AppCompatActivity {
         Resources res = getResources();
         Drawable drawable = res.getDrawable(R.mipmap.simulado_enem);
         Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] bitMapData = stream.toByteArray();
-        String base64 = Base64.encodeToString(bitMapData, Base64.DEFAULT);
 
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        byte[] bitMapData = stream.toByteArray();
+
+        String base64 = Base64.encodeToString(bitMapData, Base64.NO_WRAP);
         linhaGaleria.addView(getSendButton(base64));
 
         linearLayoutGaleria.addView(linhaGaleria);
