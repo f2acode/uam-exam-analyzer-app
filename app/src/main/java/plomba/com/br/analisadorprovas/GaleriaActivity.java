@@ -4,31 +4,30 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.nio.ByteBuffer;
+import java.io.FileInputStream;
 
 public class GaleriaActivity extends AppCompatActivity {
 
@@ -54,17 +53,27 @@ public class GaleriaActivity extends AppCompatActivity {
             for(int i = 0; i < imageFiles.length; i ++){
 
                 LinearLayout linhaGaleria = new LinearLayout(this);
-                linhaGaleria.setLayoutParams(new LinearLayout.LayoutParams(
+
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         screenHeight/7
-                ));
-
+                );
+                layoutParams.setMargins(10, 10, 10, 10);
+                linhaGaleria.setLayoutParams(layoutParams);
                 linhaGaleria.setOrientation(LinearLayout.HORIZONTAL);
-                linhaGaleria.setPadding(3, 3, 3, 3);
+                linhaGaleria.setPadding(10, 10, 10, 10);
+                linhaGaleria.setBackgroundColor(Color.WHITE);
 
                 linhaGaleria.addView(getFileToImageView(imageFiles[i]));
                 linhaGaleria.addView(getTextToTextView(imageFiles[i]));
-                //linhaGaleria.addView(getSendButton(imageFiles[i]));
+
+                // Button
+                FileInputStream fileInputStream = new FileInputStream(imageFiles[i]);
+                long byteLength = imageFiles[i].length();
+                byte[] filecontent = new byte[(int) byteLength];
+                fileInputStream.read(filecontent, 0, (int) byteLength);
+                String imageBase64 = Base64.encodeToString(filecontent, Base64.DEFAULT);
+                linhaGaleria.addView(getSendButton(imageBase64));
 
                 linearLayoutGaleria.addView(linhaGaleria);
             }
@@ -76,13 +85,16 @@ public class GaleriaActivity extends AppCompatActivity {
 
     public void getDefaultExamImage(){
         LinearLayout linhaGaleria = new LinearLayout(this);
-        linhaGaleria.setLayoutParams(new LinearLayout.LayoutParams(
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 screenHeight/7
-        ));
-
+        );
+        layoutParams.setMargins(10, 10, 10, 10);
+        linhaGaleria.setLayoutParams(layoutParams);
         linhaGaleria.setOrientation(LinearLayout.HORIZONTAL);
-        linhaGaleria.setPadding(3, 3, 3, 3);
+        linhaGaleria.setPadding(10, 10, 10, 10);
+        linhaGaleria.setBackgroundColor(Color.WHITE);
 
         ImageView imageView = new ImageView(this);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(
@@ -100,7 +112,9 @@ public class GaleriaActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
         Resources r = getResources();
-        float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics());
+        float pxLeftMargin = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics()
+        );
         layoutParamsTxtView.setMargins(Math.round(pxLeftMargin), 0, 0, 0);
         textView.setLayoutParams(layoutParamsTxtView);
 
@@ -181,6 +195,11 @@ public class GaleriaActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                linearLayoutGaleria.removeAllViews();
+                ProgressBar loading = new ProgressBar(getBaseContext());
+                linearLayoutGaleria.addView(loading);
+
                 httpRequestHelper.postFoto(new HttpRequestHelper.VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
